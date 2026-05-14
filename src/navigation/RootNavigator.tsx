@@ -6,5 +6,5 @@ import { AppTabs } from './AppTabs';
 export function RootNavigator() {
   const { isAuthenticated } = useAuth();
 
-  return <NavigationContainer>{isAuthenticated ? <AuthStack /> : <AppTabs />}</NavigationContainer>;
+  return <NavigationContainer>{isAuthenticated ? <AppTabs /> : <AuthStack />}</NavigationContainer>;
 }
