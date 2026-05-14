@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { User } from '../types/auth';
+import { setAuthToken } from '../services/api';
 
 interface AuthContextData {
   user: User | null;
@@ -17,11 +18,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
 
   function signIn(accessToken: string, userData: User) {
+    setAuthToken(accessToken);
     setToken(accessToken);
     setUser(userData);
   }
 
   function signOut() {
+    setAuthToken(null);
     setToken(null);
     setUser(null);
   }
