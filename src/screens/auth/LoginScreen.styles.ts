@@ -1,61 +1,67 @@
 import styled from 'styled-components/native';
+import { colors } from '../../theme/colors';
 
 export const Container = styled.View`
   flex: 1;
-  padding: 32px 24px;
+  padding: 0 24px;
   justify-content: center;
-  background-color: #fff;
+  background-color: ${colors.bg};
 `;
 
 export const Title = styled.Text`
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
-  color: #111;
-  margin-bottom: 8px;
+  color: ${colors.accent};
+  margin-bottom: 4px;
 `;
 
 export const Subtitle = styled.Text`
   font-size: 14px;
-  color: #666;
-  margin-bottom: 40px;
+  color: ${colors.textSecondary};
+  margin-bottom: 48px;
 `;
 
 export const Label = styled.Text`
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
-  color: #333;
-  margin-bottom: 6px;
+  color: ${colors.textSecondary};
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
 `;
 
 export const Input = styled.TextInput`
   height: 48px;
   border-width: 1px;
-  border-color: #ddd;
-  border-radius: 8px;
+  border-color: ${colors.border};
+  border-radius: 4px;
   padding: 0 14px;
   font-size: 15px;
-  color: #111;
-  background-color: #fafafa;
-  margin-bottom: 16px;
+  color: ${colors.textPrimary};
+  background-color: ${colors.surface};
+  margin-bottom: 20px;
 `;
 
 export const ErrorText = styled.Text`
-  font-size: 13px;
-  color: #e53e3e;
+  font-size: 12px;
+  color: ${colors.accent};
   margin-bottom: 16px;
+  letter-spacing: 0.2px;
 `;
 
 export const Button = styled.TouchableOpacity<{ disabled?: boolean }>`
-  height: 50px;
-  border-radius: 8px;
-  background-color: ${({ disabled }) => (disabled ? '#a0aec0' : '#2563eb')};
+  height: 48px;
+  border-radius: 4px;
+  background-color: ${({ disabled }) => (disabled ? colors.disabled : colors.accent)};
   align-items: center;
   justify-content: center;
   margin-top: 8px;
 `;
 
 export const ButtonText = styled.Text`
-  color: #fff;
-  font-size: 16px;
-  font-weight: 600;
+  color: ${colors.textPrimary};
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
 `;

@@ -31,7 +31,7 @@ export function LoginScreen() {
       setError('');
       setLoading(true);
       const data = await login(email.trim(), password);
-      signIn(data.accessToken, parseUser(data.user));
+      await signIn(data.accessToken, parseUser(data.user));
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 401) {
