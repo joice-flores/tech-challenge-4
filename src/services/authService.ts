@@ -16,6 +16,10 @@ export async function login(email: string, password: string): Promise<LoginRespo
   return data;
 }
 
+export async function logout(): Promise<void> {
+  await api.post('/auth/logout');
+}
+
 export function parseUser(raw: LoginResponse['user']): User {
   return {
     id: raw.id,

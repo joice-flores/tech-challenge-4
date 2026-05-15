@@ -5,6 +5,7 @@ import { PostsStack } from './PostsStack';
 import { AdminStack } from './AdminStack';
 import { ProfileStack } from './ProfileStack';
 import { useAuth } from '../contexts/AuthContext';
+import { tabBarOptions } from '../theme/navigationTheme';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
@@ -14,7 +15,7 @@ export function AppTabs() {
   const { isTeacher } = useAuth();
 
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator screenOptions={{ headerShown: false, ...tabBarOptions }}>
       <Tab.Screen
         name="PostsTab"
         component={PostsStack}
