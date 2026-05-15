@@ -1,9 +1,9 @@
-import { Container, Label } from './AdminPostsScreen.styles';
+import { Screen, Label } from './AdminPostsScreen.styles';
 
 export function AdminPostsScreen() {
   return (
-    <Container>
+    <Screen>
       <Label>Admin – Posts</Label>
-    </Container>
+    </Screen>
   );
 }

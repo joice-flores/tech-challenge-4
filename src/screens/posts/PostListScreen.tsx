@@ -1,9 +1,9 @@
-import { Container, Label } from './PostListScreen.styles';
+import { Screen, Label } from './PostListScreen.styles';
 
 export function PostListScreen() {
   return (
-    <Container>
+    <Screen>
       <Label>Lista de Posts</Label>
-    </Container>
+    </Screen>
   );
 }
