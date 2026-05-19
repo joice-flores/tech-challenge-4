@@ -27,7 +27,8 @@ export function ProfileScreen() {
     }
   }
 
-  const roleLabel = user?.role === 'teacher' ? 'Professor' : 'Aluno';
+  const roleLabel =
+    user?.role === 'teacher' ? 'Professor' : user?.role === 'admin' ? 'Administrador' : 'Aluno';
   const initials = user?.name?.charAt(0).toUpperCase() ?? '?';
 
   return (
