@@ -1,13 +1,30 @@
 import axios from 'axios';
-import { Platform } from 'react-native';
 
-// Android emulator routes localhost to 10.0.2.2
-const BASE_URL = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
+const ENV_BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: ENV_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
 });
+
+let unauthorizedHandler: (() => void | Promise<void>) | null = null;
+
+export function setUnauthorizedHandler(handler: (() => void | Promise<void>) | null) {
+  unauthorizedHandler = handler;
+}
+
+api.interceptors.response.use(
+  response => response,
+  async error => {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      if (unauthorizedHandler) {
+        await unauthorizedHandler();
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 export function setAuthToken(token: string | null) {
   if (token) {
