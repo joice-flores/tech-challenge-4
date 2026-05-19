@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import { Toast, useToast } from '../../components/Toast';
-import { MarkdownEditor } from '../../components/MarkdownEditor';
-import { AdminStackParamList } from '../../types/navigation';
-import { fetchPosts, updatePost } from '../../services/postService';
-import { colors } from '../../theme/colors';
+import { Toast, useToast } from '~/components/Toast';
+import { MarkdownEditor } from '~/components/MarkdownEditor';
+import { AdminStackParamList } from '~/types/navigation';
+import { useAuth } from '~/contexts/AuthContext';
+import { createPost } from '~/services/postService';
 import {
   Screen,
   Label,
@@ -15,33 +15,18 @@ import {
   ErrorText,
   SubmitButton,
   SubmitText,
-  centeredContentStyle,
-} from './EditPostScreen.styles';
+} from './CreatePostScreen.styles';
 
-type Nav = NativeStackNavigationProp<AdminStackParamList, 'EditPost'>;
-type Route = RouteProp<AdminStackParamList, 'EditPost'>;
+type Nav = NativeStackNavigationProp<AdminStackParamList, 'CreatePost'>;
 
-export function EditPostScreen() {
+export function CreatePostScreen() {
   const navigation = useNavigation<Nav>();
-  const { params } = useRoute<Route>();
+  const { user } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(true);
   const { toast, show: showToast, hide: hideToast } = useToast();
-
-  useEffect(() => {
-    fetchPosts()
-      .then(posts => {
-        const post = posts.find(p => p.id === params.id);
-        if (post) {
-          setTitle(post.title);
-          setContent(post.content);
-        }
-      })
-      .finally(() => setInitialLoading(false));
-  }, [params.id]);
 
   async function handleSubmit() {
     if (!title.trim() || !content.trim()) {
@@ -52,13 +37,13 @@ export function EditPostScreen() {
     try {
       setError('');
       setLoading(true);
-      await updatePost(params.id, { title: title.trim(), content: content.trim() });
-      showToast('Post atualizado com sucesso.');
+      await createPost({ title: title.trim(), content: content.trim(), author: user?.name ?? '' });
+      showToast('Post criado com sucesso.');
       setTimeout(() => navigation.goBack(), 1500);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 401 || err.response?.status === 403) {
-          setError('Sem permissão para editar posts.');
+          setError('Sem permissão para publicar posts.');
         } else if (err.response) {
           setError(`Erro do servidor: ${err.response.status}`);
         } else {
@@ -70,14 +55,6 @@ export function EditPostScreen() {
     } finally {
       setLoading(false);
     }
-  }
-
-  if (initialLoading) {
-    return (
-      <Screen contentContainerStyle={centeredContentStyle}>
-        <ActivityIndicator size="large" color={colors.accent} />
-      </Screen>
-    );
   }
 
   return (
@@ -103,7 +80,7 @@ export function EditPostScreen() {
       {error ? <ErrorText>{error}</ErrorText> : null}
 
       <SubmitButton onPress={handleSubmit} disabled={loading} activeOpacity={0.8}>
-        {loading ? <ActivityIndicator color={colors.bg} /> : <SubmitText>Salvar</SubmitText>}
+        {loading ? <ActivityIndicator color="#fff" /> : <SubmitText>Publicar</SubmitText>}
       </SubmitButton>
 
       <Toast toast={toast} onHide={hideToast} />

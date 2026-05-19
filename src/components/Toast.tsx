@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Animated } from 'react-native';
 import { CheckCircle } from 'lucide-react-native';
 import styled from 'styled-components/native';
-import { colors } from '../theme/colors';
+import { colors } from '~/theme/colors';
 
 const Container = styled(Animated.View)`
   position: absolute;

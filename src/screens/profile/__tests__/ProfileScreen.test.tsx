@@ -1,15 +1,15 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react-native';
-import { ProfileScreen } from '../ProfileScreen';
-import * as AuthContext from '../../../contexts/AuthContext';
-import * as authService from '../../../services/authService';
+import { ProfileScreen } from '~/screens/profile/ProfileScreen';
+import * as AuthContext from '~/contexts/AuthContext';
+import * as authService from '~/services/authService';
 
 const mockSignOut = jest.fn();
 
-jest.mock('../../../contexts/AuthContext', () => ({
+jest.mock('~/contexts/AuthContext', () => ({
   useAuth: jest.fn(),
 }));
 
-jest.mock('../../../services/authService', () => ({
+jest.mock('~/services/authService', () => ({
   logout: jest.fn(),
 }));
 

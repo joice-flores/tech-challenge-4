@@ -3,10 +3,10 @@ import { FlatList, Modal, ActivityIndicator } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Pencil, Trash2 } from 'lucide-react-native';
-import { AdminStackParamList } from '../../types/navigation';
-import { Post, fetchPosts, deletePost } from '../../services/postService';
-import { colors } from '../../theme/colors';
-import { Toast, useToast } from '../../components/Toast';
+import { AdminStackParamList } from '~/types/navigation';
+import { Post, fetchPosts, deletePost } from '~/services/postService';
+import { colors } from '~/theme/colors';
+import { Toast, useToast } from '~/components/Toast';
 import {
   Screen,
   CenteredScreen,
@@ -26,9 +26,9 @@ import {
   ModalActions,
   ModalBtn,
   ModalBtnText,
-} from './AdminPostsScreen.styles';
+} from './AdminPostListScreen.styles';
 
-type Nav = NativeStackNavigationProp<AdminStackParamList, 'AdminPosts'>;
+type Nav = NativeStackNavigationProp<AdminStackParamList, 'AdminPostsList'>;
 
 const listContentStyle = { padding: 12, paddingBottom: 100 };
 
@@ -41,7 +41,7 @@ function formatDate(dateStr?: string) {
   });
 }
 
-export function AdminPostsScreen() {
+export function AdminPostsListScreen() {
   const navigation = useNavigation<Nav>();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);

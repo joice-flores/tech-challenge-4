@@ -1,12 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StackActions } from '@react-navigation/native';
 import { BookOpen, Settings, User } from 'lucide-react-native';
-import { RootTabParamList } from '../types/navigation';
+import { RootTabParamList } from '~/types/navigation';
 import { PostsStack } from './PostsStack';
 import { AdminStack } from './AdminStack';
 import { ProfileStack } from './ProfileStack';
-import { useAuth } from '../contexts/AuthContext';
-import { tabBarOptions } from '../theme/navigationTheme';
+import { useAuth } from '~/contexts/AuthContext';
+import { tabBarOptions } from '~/theme/navigationTheme';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 

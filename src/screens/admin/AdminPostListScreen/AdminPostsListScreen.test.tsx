@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react-native';
-import { AdminPostsScreen } from '../AdminPostsScreen';
-import * as postService from '../../../services/postService';
+import { AdminPostsListScreen } from './AdminPostsListScreen';
+import * as postService from '~/services/postService';
 
 const mockNavigate = jest.fn();
 
@@ -10,7 +10,7 @@ jest.mock('@react-navigation/native', () => ({
     (jest.requireActual('react') as typeof import('react')).useEffect(cb, []),
 }));
 
-jest.mock('../../../services/postService', () => ({
+jest.mock('~/services/postService', () => ({
   fetchPosts: jest.fn(),
   deletePost: jest.fn(),
 }));
@@ -37,35 +37,35 @@ beforeEach(() => {
   (postService.fetchPosts as jest.Mock).mockResolvedValue(mockPosts);
 });
 
-describe('AdminPostsScreen', () => {
+describe('AdminPostsListScreen', () => {
   it('renders list of posts after loading', async () => {
-    render(<AdminPostsScreen />);
+    render(<AdminPostsListScreen />);
     expect(await screen.findByText('Post Alpha')).toBeTruthy();
     expect(screen.getByText('Post Beta')).toBeTruthy();
   });
 
   it('shows empty state when no posts', async () => {
     (postService.fetchPosts as jest.Mock).mockResolvedValue([]);
-    render(<AdminPostsScreen />);
+    render(<AdminPostsListScreen />);
     expect(await screen.findByText('Nenhum post encontrado.')).toBeTruthy();
   });
 
   it('navigates to CreatePost on FAB press', async () => {
-    render(<AdminPostsScreen />);
+    render(<AdminPostsListScreen />);
     await screen.findByText('Post Alpha');
     fireEvent.press(screen.getByText('+'));
     expect(mockNavigate).toHaveBeenCalledWith('CreatePost');
   });
 
   it('navigates to EditPost for the correct post', async () => {
-    render(<AdminPostsScreen />);
+    render(<AdminPostsListScreen />);
     await screen.findByText('Post Alpha');
     fireEvent.press(screen.getByLabelText('Editar Post Alpha'));
     expect(mockNavigate).toHaveBeenCalledWith('EditPost', { id: '1' });
   });
 
   it('shows confirmation modal on delete press', async () => {
-    render(<AdminPostsScreen />);
+    render(<AdminPostsListScreen />);
     await screen.findByText('Post Alpha');
     fireEvent.press(screen.getByLabelText('Excluir Post Alpha'));
     expect(await screen.findByText('Excluir post')).toBeTruthy();
@@ -73,7 +73,7 @@ describe('AdminPostsScreen', () => {
   });
 
   it('closes modal on cancel press', async () => {
-    render(<AdminPostsScreen />);
+    render(<AdminPostsListScreen />);
     await screen.findByText('Post Alpha');
     fireEvent.press(screen.getByLabelText('Excluir Post Alpha'));
     await screen.findByText('Excluir post');
@@ -85,7 +85,7 @@ describe('AdminPostsScreen', () => {
 
   it('removes post from list after confirmed delete', async () => {
     (postService.deletePost as jest.Mock).mockResolvedValue(undefined);
-    render(<AdminPostsScreen />);
+    render(<AdminPostsListScreen />);
     await screen.findByText('Post Alpha');
 
     fireEvent.press(screen.getByLabelText('Excluir Post Alpha'));

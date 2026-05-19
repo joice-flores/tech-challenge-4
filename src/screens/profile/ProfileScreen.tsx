@@ -1,5 +1,5 @@
-import { useAuth } from '../../contexts/AuthContext';
-import { logout } from '../../services/authService';
+import { useAuth } from '~/contexts/AuthContext';
+import { logout } from '~/services/authService';
 import {
   Screen,
   Header,

@@ -5,6 +5,7 @@
     "types": ["styled-components-react-native", "jest"],
     "baseUrl": ".",
     "paths": {
+      "~/*": ["src/*"],
       "@screens/*": ["src/screens/*"],
       "@services/*": ["src/services/*"],
       "@contexts/*": ["src/contexts/*"],

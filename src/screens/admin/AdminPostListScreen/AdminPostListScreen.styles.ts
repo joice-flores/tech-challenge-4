@@ -1,9 +1,11 @@
 import styled from 'styled-components/native';
-import { colors } from '../../theme/colors';
+import { colors } from '~/theme/colors';
 
 export const Screen = styled.View`
   flex: 1;
   background-color: ${colors.bg};
+  padding: 20px 16px;
+  gap: 12px;
 `;
 
 export const CenteredScreen = styled.View`

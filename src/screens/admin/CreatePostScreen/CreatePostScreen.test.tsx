@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react-native';
 import axios from 'axios';
-import { CreatePostScreen } from '../CreatePostScreen';
-import * as postService from '../../../services/postService';
+import { CreatePostScreen } from './CreatePostScreen';
+import * as postService from '~/services/postService';
 
 jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
@@ -14,11 +14,11 @@ jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ goBack: mockGoBack }),
 }));
 
-jest.mock('../../../contexts/AuthContext', () => ({
+jest.mock('~/contexts/AuthContext', () => ({
   useAuth: () => ({ user: { name: 'João Silva' } }),
 }));
 
-jest.mock('../../../services/postService', () => ({
+jest.mock('~/services/postService', () => ({
   createPost: jest.fn(),
 }));
 

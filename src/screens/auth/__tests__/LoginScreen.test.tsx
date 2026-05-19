@@ -1,16 +1,16 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react-native';
 import axios from 'axios';
-import { LoginScreen } from '../LoginScreen';
-import * as authService from '../../../services/authService';
-import * as AuthContext from '../../../contexts/AuthContext';
+import { LoginScreen } from '~/screens/auth/LoginScreen';
+import * as authService from '~/services/authService';
+import * as AuthContext from '~/contexts/AuthContext';
 
 const mockSignIn = jest.fn();
 
-jest.mock('../../../contexts/AuthContext', () => ({
+jest.mock('~/contexts/AuthContext', () => ({
   useAuth: jest.fn(),
 }));
 
-jest.mock('../../../services/authService', () => ({
+jest.mock('~/services/authService', () => ({
   login: jest.fn(),
   parseUser: jest.fn(),
 }));

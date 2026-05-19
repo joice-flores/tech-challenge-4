@@ -1,11 +1,17 @@
 import styled from 'styled-components/native';
-import { colors } from '../../theme/colors';
+import { colors } from '~/theme/colors';
 
-export const Screen = styled.View`
+export const Screen = styled.ScrollView`
   flex: 1;
   background-color: ${colors.bg};
   padding: 24px 20px;
 `;
+
+export const centeredContentStyle = {
+  flexGrow: 1,
+  alignItems: 'center' as const,
+  justifyContent: 'center' as const,
+};
 
 export const Label = styled.Text`
   font-size: 11px;
@@ -60,7 +66,7 @@ export const SubmitButton = styled.TouchableOpacity<{ disabled?: boolean }>`
 export const SubmitText = styled.Text`
   font-size: 13px;
   font-weight: 700;
-  color: ${colors.textPrimary};
+  color: ${colors.bg};
   text-transform: uppercase;
   letter-spacing: 1.2px;
 `;
