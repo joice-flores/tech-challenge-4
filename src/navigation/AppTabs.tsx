@@ -12,7 +12,8 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 type TabBarIconProps = { color: string; size: number };
 
 export function AppTabs() {
-  const { isTeacher } = useAuth();
+  const { isTeacher, isAdmin } = useAuth();
+  const isTeacherOrAdmin = isTeacher || isAdmin;
 
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, ...tabBarOptions }}>
@@ -24,7 +25,7 @@ export function AppTabs() {
           tabBarIcon: ({ color, size }: TabBarIconProps) => <BookOpen color={color} size={size} />,
         }}
       />
-      {isTeacher && (
+      {isTeacherOrAdmin && (
         <Tab.Screen
           name="AdminTab"
           component={AdminStack}

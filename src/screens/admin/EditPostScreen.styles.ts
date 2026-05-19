@@ -1,25 +1,17 @@
 import styled from 'styled-components/native';
 import { colors } from '../../theme/colors';
 
-export const Container = styled.View`
+export const Screen = styled.ScrollView`
   flex: 1;
-  padding: 0 24px;
-  justify-content: center;
   background-color: ${colors.bg};
+  padding: 24px 20px;
 `;
 
-export const Title = styled.Text`
-  font-size: 32px;
-  font-weight: 700;
-  color: ${colors.accent};
-  margin-bottom: 4px;
-`;
-
-export const Subtitle = styled.Text`
-  font-size: 14px;
-  color: ${colors.textSecondary};
-  margin-bottom: 48px;
-`;
+export const centeredContentStyle = {
+  flexGrow: 1,
+  alignItems: 'center' as const,
+  justifyContent: 'center' as const,
+};
 
 export const Label = styled.Text`
   font-size: 11px;
@@ -31,15 +23,27 @@ export const Label = styled.Text`
 `;
 
 export const Input = styled.TextInput`
-  height: 48px;
+  background-color: ${colors.surface};
   border-width: 1px;
   border-color: ${colors.border};
   border-radius: 4px;
-  padding: 0 14px;
+  padding: 12px 14px;
   font-size: 15px;
   color: ${colors.textPrimary};
-  background-color: ${colors.surface};
   margin-bottom: 20px;
+`;
+
+export const TextArea = styled.TextInput`
+  background-color: ${colors.surface};
+  border-width: 1px;
+  border-color: ${colors.border};
+  border-radius: 4px;
+  padding: 12px 14px;
+  font-size: 15px;
+  color: ${colors.textPrimary};
+  margin-bottom: 20px;
+  min-height: 160px;
+  text-align-vertical: top;
 `;
 
 export const ErrorText = styled.Text`
@@ -49,20 +53,20 @@ export const ErrorText = styled.Text`
   letter-spacing: 0.2px;
 `;
 
-export const Button = styled.TouchableOpacity<{ disabled?: boolean }>`
+export const SubmitButton = styled.TouchableOpacity<{ disabled?: boolean }>`
   height: 48px;
   border-radius: 4px;
   background-color: ${({ disabled }: { disabled?: boolean }) =>
     disabled ? colors.disabled : colors.accent};
   align-items: center;
   justify-content: center;
-  margin-top: 8px;
+  margin-top: 4px;
 `;
 
-export const ButtonText = styled.Text`
-  color: ${colors.textPrimary};
+export const SubmitText = styled.Text`
   font-size: 13px;
   font-weight: 700;
+  color: ${colors.bg};
   text-transform: uppercase;
   letter-spacing: 1.2px;
 `;

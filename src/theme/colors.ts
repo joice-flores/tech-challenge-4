@@ -13,14 +13,14 @@ export const colors = {
   textSecondary: '#9A9A9A',
   textMuted: '#555555',
 
-  // Accent — FIAP red
-  accent: '#E8175D',
-  accentHover: '#C8104F',
-  accentSubtle: '#2A0A14',
-  accentText: '#F04070',
+  // Accent — cyan
+  accent: '#42ECF5',
+  accentHover: '#2ED4DC',
+  accentSubtle: '#071F20',
+  accentText: '#42ECF5',
 
   // Semantic
-  danger: '#E8175D',
+  danger: '#42ECF5',
   dangerSubtle: '#2A0A14',
   disabled: '#3A3A3A',
   disabledText: '#666666',
