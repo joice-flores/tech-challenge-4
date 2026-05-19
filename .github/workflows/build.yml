@@ -30,6 +30,8 @@ jobs:
 
       - name: Build Android (preview)
         run: eas build --platform android --profile preview --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
 
   build-ios:
     name: Build iOS (EAS)
@@ -56,3 +58,5 @@ jobs:
 
       - name: Build iOS (preview)
         run: eas build --platform ios --profile preview --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}

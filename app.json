@@ -28,6 +28,12 @@
     },
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b7412be5-5052-4b0e-98df-a7b37b5381a1"
+      }
+    },
+    "owner": "joice-flores"
   }
 }
