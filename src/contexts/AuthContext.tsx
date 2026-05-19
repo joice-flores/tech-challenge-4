@@ -11,7 +11,9 @@ interface AuthContextData {
   token: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
+  isStudent: boolean;
   isTeacher: boolean;
+  isAdmin: boolean;
   signIn: (token: string, user: User) => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -75,7 +77,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         token,
         isLoading,
         isAuthenticated: !!token,
+        isStudent: user?.role === 'student',
         isTeacher: user?.role === 'teacher',
+        isAdmin: user?.role === 'admin',
         signIn,
         signOut,
       }}
