@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { StackActions } from '@react-navigation/native';
 import { BookOpen, Settings, User } from 'lucide-react-native';
 import { RootTabParamList } from '../types/navigation';
 import { PostsStack } from './PostsStack';
@@ -20,6 +21,12 @@ export function AppTabs() {
       <Tab.Screen
         name="PostsTab"
         component={PostsStack}
+        listeners={({ navigation, route }) => ({
+          tabPress: () => {
+            const s = (route as { state?: { key: string } }).state;
+            if (s) navigation.dispatch({ ...StackActions.popToTop(), target: s.key });
+          },
+        })}
         options={{
           title: 'Posts',
           tabBarIcon: ({ color, size }: TabBarIconProps) => <BookOpen color={color} size={size} />,
@@ -29,6 +36,12 @@ export function AppTabs() {
         <Tab.Screen
           name="AdminTab"
           component={AdminStack}
+          listeners={({ navigation, route }) => ({
+            tabPress: () => {
+              const s = (route as { state?: { key: string } }).state;
+              if (s) navigation.dispatch({ ...StackActions.popToTop(), target: s.key });
+            },
+          })}
           options={{
             title: 'Admin',
             tabBarIcon: ({ color, size }: TabBarIconProps) => (
@@ -40,6 +53,12 @@ export function AppTabs() {
       <Tab.Screen
         name="ProfileTab"
         component={ProfileStack}
+        listeners={({ navigation, route }) => ({
+          tabPress: () => {
+            const s = (route as { state?: { key: string } }).state;
+            if (s) navigation.dispatch({ ...StackActions.popToTop(), target: s.key });
+          },
+        })}
         options={{
           title: 'Perfil',
           tabBarIcon: ({ color, size }: TabBarIconProps) => <User color={color} size={size} />,
