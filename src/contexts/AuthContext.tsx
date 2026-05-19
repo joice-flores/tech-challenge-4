@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { User } from '../types/auth';
-import { setAuthToken } from '../services/api';
+import { setAuthToken, setUnauthorizedHandler } from '../services/api';
 
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'auth_user';
@@ -23,6 +23,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const signIn = useCallback(async (accessToken: string, userData: User) => {
+    await SecureStore.setItemAsync(TOKEN_KEY, accessToken);
+    await SecureStore.setItemAsync(USER_KEY, JSON.stringify(userData));
+    setAuthToken(accessToken);
+    setToken(accessToken);
+    setUser(userData);
+  }, []);
+
+  const signOut = useCallback(async () => {
+    await SecureStore.deleteItemAsync(TOKEN_KEY);
+    await SecureStore.deleteItemAsync(USER_KEY);
+    setAuthToken(null);
+    setToken(null);
+    setUser(null);
+  }, []);
+
   useEffect(() => {
     async function loadSession() {
       try {
@@ -42,21 +58,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loadSession();
   }, []);
 
-  async function signIn(accessToken: string, userData: User) {
-    await SecureStore.setItemAsync(TOKEN_KEY, accessToken);
-    await SecureStore.setItemAsync(USER_KEY, JSON.stringify(userData));
-    setAuthToken(accessToken);
-    setToken(accessToken);
-    setUser(userData);
-  }
+  useEffect(() => {
+    setUnauthorizedHandler(async () => {
+      await signOut();
+    });
 
-  async function signOut() {
-    await SecureStore.deleteItemAsync(TOKEN_KEY);
-    await SecureStore.deleteItemAsync(USER_KEY);
-    setAuthToken(null);
-    setToken(null);
-    setUser(null);
-  }
+    return () => {
+      setUnauthorizedHandler(null);
+    };
+  }, [signOut]);
 
   return (
     <AuthContext.Provider

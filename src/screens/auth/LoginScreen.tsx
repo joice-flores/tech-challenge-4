@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import axios from 'axios';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '../../contexts/AuthContext';
 import { login, parseUser } from '../../services/authService';
 import {
@@ -14,38 +17,69 @@ import {
   ButtonText,
 } from './LoginScreen.styles';
 
+const FILL_EMAIL_AND_PASSWORD_MESSAGE = 'Preencha e-mail e senha.';
+
+const loginSchema = z.object({
+  email: z.string().min(1, FILL_EMAIL_AND_PASSWORD_MESSAGE).email('E-mail inválido.'),
+  password: z.string().min(1, FILL_EMAIL_AND_PASSWORD_MESSAGE),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
+
 export function LoginScreen() {
   const { signIn } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    defaultValues: { email: '', password: '' },
+    resolver: zodResolver(loginSchema),
+  });
 
-  async function handleLogin() {
-    if (!email.trim() || !password.trim()) {
-      setError('Preencha e-mail e senha.');
-      return;
+  const validationMessage = useMemo(() => {
+    const emailMessage = errors.email?.message;
+    const passwordMessage = errors.password?.message;
+
+    const needsFillEmailAndPassword =
+      emailMessage === FILL_EMAIL_AND_PASSWORD_MESSAGE ||
+      passwordMessage === FILL_EMAIL_AND_PASSWORD_MESSAGE;
+
+    if (needsFillEmailAndPassword) {
+      return FILL_EMAIL_AND_PASSWORD_MESSAGE;
     }
 
+    return emailMessage || passwordMessage || '';
+  }, [errors.email?.message, errors.password?.message]);
+
+  const error = validationMessage || serverError;
+
+  async function handleLogin(formData: LoginFormData) {
+    const email = formData.email.trim();
+    const password = formData.password;
+
     try {
-      setError('');
-      setLoading(true);
-      const data = await login(email.trim(), password);
+      setServerError('');
+      const data = await login(email, password);
       await signIn(data.accessToken, parseUser(data.user));
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 401) {
-          setError('E-mail ou senha inválidos.');
-        } else if (err.response) {
-          setError(`Erro do servidor: ${err.response.status}`);
-        } else {
-          setError('Não foi possível conectar ao servidor.');
+          setServerError('E-mail ou senha inválidos.');
+          return;
         }
-      } else {
-        setError('Ocorreu um erro inesperado.');
+
+        if (err.response) {
+          setServerError(`Erro do servidor: ${err.response.status}`);
+          return;
+        }
+
+        setServerError('Não foi possível conectar ao servidor.');
+        return;
       }
-    } finally {
-      setLoading(false);
+
+      setServerError('Ocorreu um erro inesperado.');
     }
   }
 
@@ -55,29 +89,43 @@ export function LoginScreen() {
       <Subtitle>Faça login para continuar</Subtitle>
 
       <Label>E-mail</Label>
-      <Input
-        value={email}
-        onChangeText={setEmail}
-        placeholder="seu@email.com"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-        editable={!loading}
+      <Controller
+        control={control}
+        name="email"
+        render={({ field: { value, onChange, onBlur } }) => (
+          <Input
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="seu@email.com"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            editable={!isSubmitting}
+          />
+        )}
       />
 
       <Label>Senha</Label>
-      <Input
-        value={password}
-        onChangeText={setPassword}
-        placeholder="••••••••"
-        secureTextEntry
-        editable={!loading}
+      <Controller
+        control={control}
+        name="password"
+        render={({ field: { value, onChange, onBlur } }) => (
+          <Input
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="••••••••"
+            secureTextEntry
+            editable={!isSubmitting}
+          />
+        )}
       />
 
       {error ? <ErrorText>{error}</ErrorText> : null}
 
-      <Button onPress={handleLogin} disabled={loading} activeOpacity={0.8}>
-        {loading ? <ActivityIndicator color="#fff" /> : <ButtonText>Entrar</ButtonText>}
+      <Button onPress={handleSubmit(handleLogin)} disabled={isSubmitting} activeOpacity={0.8}>
+        {isSubmitting ? <ActivityIndicator color="#fff" /> : <ButtonText>Entrar</ButtonText>}
       </Button>
     </Container>
   );
