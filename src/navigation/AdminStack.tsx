@@ -1,13 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AdminStackParamList } from '../types/navigation';
-import { AdminPostsScreen } from '../screens/admin/AdminPostsScreen';
-import { AdminPostsListScreen } from '../screens/admin/AdminPostsListScreen';
-import { CreatePostScreen } from '../screens/admin/CreatePostScreen';
-import { EditPostScreen } from '../screens/admin/EditPostScreen';
-import { AdminUsersScreen } from '../screens/admin/AdminUsersScreen';
-import { CreateUserScreen } from '../screens/admin/CreateUserScreen';
-import { EditUserScreen } from '../screens/admin/EditUserScreen';
-import { stackScreenOptions } from '../theme/navigationTheme';
+import { AdminStackParamList } from '~/types/navigation';
+import { AdminScreen } from '~/screens/admin/AdminScreen/AdminScreen';
+import { AdminPostsListScreen } from '~/screens/admin/AdminPostListScreen/AdminPostsListScreen';
+import { CreatePostScreen } from '~/screens/admin/CreatePostScreen/CreatePostScreen';
+import { EditPostScreen } from '~/screens/admin/EditPostScreen/EditPostScreen';
+import { AdminUsersScreen } from '~/screens/admin/AdminUsersScreen/AdminUsersScreen';
+import { CreateUserScreen } from '~/screens/admin/CreateUserScreen/CreateUserScreen';
+import { EditUserScreen } from '~/screens/admin/EditUserScreen/EditUserScreen';
+import { stackScreenOptions } from '~/theme/navigationTheme';
 
 const Stack = createNativeStackNavigator<AdminStackParamList>();
 
@@ -16,7 +16,7 @@ export function AdminStack() {
     <Stack.Navigator screenOptions={stackScreenOptions}>
       <Stack.Screen
         name="AdminPosts"
-        component={AdminPostsScreen}
+        component={AdminScreen}
         options={{ title: 'Administração' }}
       />
       <Stack.Screen
@@ -34,16 +34,6 @@ export function AdminStack() {
         name="AdminUsers"
         component={AdminUsersScreen}
         options={{ title: 'Usuários' }}
-      />
-      <Stack.Screen
-        name="CreateUser"
-        component={CreateUserScreen}
-        options={{ title: 'Novo Usuário' }}
-      />
-      <Stack.Screen
-        name="EditUser"
-        component={EditUserScreen}
-        options={{ title: 'Editar Usuário' }}
       />
     </Stack.Navigator>
   );

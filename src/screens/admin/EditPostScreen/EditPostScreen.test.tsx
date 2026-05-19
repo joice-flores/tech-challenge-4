@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react-native';
 import axios from 'axios';
-import { EditPostScreen } from '../EditPostScreen';
-import * as postService from '../../../services/postService';
+import { EditPostScreen } from './EditPostScreen';
+import * as postService from '~/services/postService';
 
 jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
@@ -15,7 +15,7 @@ jest.mock('@react-navigation/native', () => ({
   useRoute: () => ({ params: { id: '42' } }),
 }));
 
-jest.mock('../../../services/postService', () => ({
+jest.mock('~/services/postService', () => ({
   fetchPosts: jest.fn(),
   updatePost: jest.fn(),
 }));

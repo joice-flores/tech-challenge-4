@@ -1,7 +1,7 @@
 import { ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import styled from 'styled-components/native';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '~/contexts/AuthContext';
 import { AuthStack } from './AuthStack';
 import { AppTabs } from './AppTabs';
 

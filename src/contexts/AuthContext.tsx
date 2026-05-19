@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import { User } from '../types/auth';
-import { setAuthToken, setUnauthorizedHandler } from '../services/api';
+import { User } from '~/types/auth';
+import { setAuthToken, setUnauthorizedHandler } from '~/services/api';
 
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'auth_user';

@@ -3,10 +3,10 @@ import { FlatList, Modal, ActivityIndicator } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Pencil, Trash2 } from 'lucide-react-native';
-import { AdminStackParamList } from '../../types/navigation';
-import { Post, fetchPosts, deletePost } from '../../services/postService';
-import { colors } from '../../theme/colors';
-import { Toast, useToast } from '../../components/Toast';
+import { AdminStackParamList } from '~/types/navigation';
+import { Post, fetchPosts, deletePost } from '~/services/postService';
+import { colors } from '~/theme/colors';
+import { Toast, useToast } from '~/components/Toast';
 import {
   Screen,
   CenteredScreen,
@@ -26,7 +26,7 @@ import {
   ModalActions,
   ModalBtn,
   ModalBtnText,
-} from './AdminPostsScreen.styles';
+} from './AdminPostListScreen.styles';
 
 type Nav = NativeStackNavigationProp<AdminStackParamList, 'AdminPostsList'>;
 

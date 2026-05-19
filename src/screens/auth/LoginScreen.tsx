@@ -4,8 +4,8 @@ import axios from 'axios';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAuth } from '../../contexts/AuthContext';
-import { login, parseUser } from '../../services/authService';
+import { useAuth } from '~/contexts/AuthContext';
+import { login, parseUser } from '~/services/authService';
 import {
   Container,
   Title,

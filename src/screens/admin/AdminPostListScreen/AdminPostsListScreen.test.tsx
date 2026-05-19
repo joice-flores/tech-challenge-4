@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react-native';
-import { AdminPostsListScreen } from '../AdminPostsListScreen';
-import * as postService from '../../../services/postService';
+import { AdminPostsListScreen } from './AdminPostsListScreen';
+import * as postService from '~/services/postService';
 
 const mockNavigate = jest.fn();
 
@@ -10,7 +10,7 @@ jest.mock('@react-navigation/native', () => ({
     (jest.requireActual('react') as typeof import('react')).useEffect(cb, []),
 }));
 
-jest.mock('../../../services/postService', () => ({
+jest.mock('~/services/postService', () => ({
   fetchPosts: jest.fn(),
   deletePost: jest.fn(),
 }));

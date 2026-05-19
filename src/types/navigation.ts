@@ -9,8 +9,12 @@ export type PostsStackParamList = {
 
 export type AdminStackParamList = {
   AdminPosts: undefined;
+  AdminPostsList: undefined;
   CreatePost: undefined;
   EditPost: { id: string };
+  AdminUsers: undefined;
+  CreateUser: undefined;
+  EditUser: { id: string };
 };
 
 export type ProfileStackParamList = {

@@ -1,7 +1,7 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { FileText, Users } from 'lucide-react-native';
-import { AdminStackParamList } from '../../types/navigation';
+import { AdminStackParamList } from '~/types/navigation';
 import {
   Screen,
   NavCard,
@@ -9,11 +9,11 @@ import {
   NavCardContent,
   NavCardLabel,
   NavCardDesc,
-} from './AdminPostsScreen.styles';
+} from './AdminScreen.styles';
 
 type Nav = NativeStackNavigationProp<AdminStackParamList, 'AdminPosts'>;
 
-export function AdminPostsScreen() {
+export function AdminScreen() {
   const navigation = useNavigation<Nav>();
 
   return (

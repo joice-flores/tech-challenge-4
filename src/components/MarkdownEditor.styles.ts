@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { colors } from '../theme/colors';
+import { colors } from '~/theme/colors';
 
 export const Wrapper = styled.View`
   margin-bottom: 20px;

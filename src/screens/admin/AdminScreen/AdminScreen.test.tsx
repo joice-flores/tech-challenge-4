@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react-native';
-import { AdminPostsScreen } from '../AdminPostsScreen';
+import { AdminScreen } from './AdminScreen';
 
 const mockNavigate = jest.fn();
 
@@ -11,21 +11,21 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('AdminPostsScreen', () => {
+describe('AdminScreen', () => {
   it('renders posts and users navigation cards', () => {
-    render(<AdminPostsScreen />);
+    render(<AdminScreen />);
     expect(screen.getByText('Posts')).toBeTruthy();
     expect(screen.getByText('Usuários')).toBeTruthy();
   });
 
   it('navigates to AdminPostsList on Posts card press', () => {
-    render(<AdminPostsScreen />);
+    render(<AdminScreen />);
     fireEvent.press(screen.getByText('Posts'));
     expect(mockNavigate).toHaveBeenCalledWith('AdminPostsList');
   });
 
   it('navigates to AdminUsers on Usuários card press', () => {
-    render(<AdminPostsScreen />);
+    render(<AdminScreen />);
     fireEvent.press(screen.getByText('Usuários'));
     expect(mockNavigate).toHaveBeenCalledWith('AdminUsers');
   });

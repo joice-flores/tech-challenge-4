@@ -1,5 +1,5 @@
 import { api } from './api';
-import { User, UserRole } from '../types/auth';
+import { User, UserRole } from '~/types/auth';
 
 interface LoginResponse {
   accessToken: string;
