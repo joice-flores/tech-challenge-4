@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import Markdown from 'react-native-markdown-display';
 import { fetchPostById, Post } from '~/services/postService';
 import { PostsStackParamList } from '~/types/navigation';
 import { colors } from '~/theme/colors';
@@ -9,9 +10,9 @@ import {
   Content,
   Title,
   Meta,
-  Body,
   Centered,
   ErrorText,
+  markdownStyles,
 } from './PostDetailScreen.styles';
 
 type Route = RouteProp<PostsStackParamList, 'PostDetail'>;
@@ -63,11 +64,11 @@ export function PostDetailScreen() {
   }
 
   return (
-    <Container>
+    <Container contentContainerStyle={{ flexGrow: 1 }}>
       <Content>
         <Title>{post?.title ?? 'Post'}</Title>
         <Meta>{post?.author ?? 'Autor desconhecido'}</Meta>
-        <Body>{post?.content ?? ''}</Body>
+        <Markdown style={markdownStyles}>{post?.content ?? ''}</Markdown>
       </Content>
     </Container>
   );
