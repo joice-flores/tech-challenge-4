@@ -5,6 +5,8 @@ import { AdminPostsListScreen } from '~/screens/admin/AdminPostListScreen/AdminP
 import { CreatePostScreen } from '~/screens/admin/CreatePostScreen/CreatePostScreen';
 import { EditPostScreen } from '~/screens/admin/EditPostScreen/EditPostScreen';
 import { AdminUsersScreen } from '~/screens/admin/AdminUsersScreen/AdminUsersScreen';
+import { CreateUserScreen } from '~/screens/admin/CreateUserScreen/CreateUserScreen';
+import { EditUserScreen } from '~/screens/admin/EditUserScreen/EditUserScreen';
 import { stackScreenOptions } from '~/theme/navigationTheme';
 
 const Stack = createNativeStackNavigator<AdminStackParamList>();
@@ -32,6 +34,16 @@ export function AdminStack() {
         name="AdminUsers"
         component={AdminUsersScreen}
         options={{ title: 'Usuários' }}
+      />
+      <Stack.Screen
+        name="CreateUser"
+        component={CreateUserScreen}
+        options={{ title: 'Novo Usuário' }}
+      />
+      <Stack.Screen
+        name="EditUser"
+        component={EditUserScreen}
+        options={{ title: 'Editar Usuário' }}
       />
     </Stack.Navigator>
   );
