@@ -14,7 +14,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.joiceflores.techchallenge4",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.joiceflores.techchallenge4",
