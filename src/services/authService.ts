@@ -1,7 +1,7 @@
 import { api } from './api';
 import { User, UserRole } from '~/types/auth';
 
-interface LoginResponse {
+interface LoginPayload {
   accessToken: string;
   user: {
     id: string;
@@ -11,16 +11,24 @@ interface LoginResponse {
   };
 }
 
-export async function login(email: string, password: string): Promise<LoginResponse> {
-  const { data } = await api.post<LoginResponse>('/auth/login', { email, password });
-  return data;
+interface WrappedLoginResponse {
+  data: LoginPayload;
+}
+
+export async function login(email: string, password: string): Promise<LoginPayload> {
+  const { data } = await api.post<LoginPayload | WrappedLoginResponse>('/auth/login', {
+    email,
+    password,
+  });
+  if ('data' in data && data.data && 'accessToken' in data.data) return data.data;
+  return data as LoginPayload;
 }
 
 export async function logout(): Promise<void> {
   await api.post('/auth/logout');
 }
 
-export function parseUser(raw: LoginResponse['user']): User {
+export function parseUser(raw: LoginPayload['user']): User {
   return {
     id: raw.id,
     name: raw.name,
