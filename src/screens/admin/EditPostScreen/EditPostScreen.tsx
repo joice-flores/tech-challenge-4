@@ -10,6 +10,7 @@ import { fetchPosts, updatePost } from '~/services/postService';
 import { colors } from '~/theme/colors';
 import {
   Screen,
+  FormContainer,
   Label,
   Input,
   ErrorText,
@@ -82,31 +83,33 @@ export function EditPostScreen() {
 
   return (
     <Screen>
-      <Label>Título</Label>
-      <Input
-        value={title}
-        onChangeText={setTitle}
-        placeholder="Título do post"
-        placeholderTextColor="#555"
-        editable={!loading}
-        maxLength={120}
-      />
+      <FormContainer>
+        <Label>Título</Label>
+        <Input
+          value={title}
+          onChangeText={setTitle}
+          placeholder="Título do post"
+          placeholderTextColor="#555"
+          editable={!loading}
+          maxLength={120}
+        />
 
-      <Label>Conteúdo</Label>
-      <MarkdownEditor
-        value={content}
-        onChange={setContent}
-        placeholder="Escreva o conteúdo aqui..."
-        editable={!loading}
-      />
+        <Label>Conteúdo</Label>
+        <MarkdownEditor
+          value={content}
+          onChange={setContent}
+          placeholder="Escreva o conteúdo aqui..."
+          editable={!loading}
+        />
 
-      {error ? <ErrorText>{error}</ErrorText> : null}
+        {error ? <ErrorText>{error}</ErrorText> : null}
 
-      <SubmitButton onPress={handleSubmit} disabled={loading} activeOpacity={0.8}>
-        {loading ? <ActivityIndicator color={colors.bg} /> : <SubmitText>Salvar</SubmitText>}
-      </SubmitButton>
+        <SubmitButton onPress={handleSubmit} disabled={loading} activeOpacity={0.8}>
+          {loading ? <ActivityIndicator color={colors.bg} /> : <SubmitText>Salvar</SubmitText>}
+        </SubmitButton>
 
-      <Toast toast={toast} onHide={hideToast} />
+        <Toast toast={toast} onHide={hideToast} />
+      </FormContainer>
     </Screen>
   );
 }

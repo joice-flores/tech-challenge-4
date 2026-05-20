@@ -1,10 +1,13 @@
 import styled from 'styled-components/native';
 import { colors } from '~/theme/colors';
 
-export const Screen = styled.View`
+export const Screen = styled.ScrollView`
   flex: 1;
   background-color: ${colors.bg};
-  padding: 24px 20px;
+`;
+
+export const FormContainer = styled.View`
+  padding: 24px 20px 40px;
 `;
 
 export const Label = styled.Text`
