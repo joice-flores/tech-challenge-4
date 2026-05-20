@@ -4,6 +4,11 @@ import * as AuthContext from '~/contexts/AuthContext';
 import * as authService from '~/services/authService';
 
 const mockSignOut = jest.fn();
+const mockNavigate = jest.fn();
+
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: mockNavigate }),
+}));
 
 jest.mock('~/contexts/AuthContext', () => ({
   useAuth: jest.fn(),
@@ -25,6 +30,7 @@ beforeEach(() => {
   (AuthContext.useAuth as unknown as jest.Mock).mockReturnValue({
     user: mockUser,
     signOut: mockSignOut,
+    updateProfile: jest.fn(),
   });
 });
 
@@ -41,20 +47,29 @@ describe('ProfileScreen', () => {
     (AuthContext.useAuth as unknown as jest.Mock).mockReturnValue({
       user: { ...mockUser, role: 'student' as const },
       signOut: mockSignOut,
+      updateProfile: jest.fn(),
     });
     render(<ProfileScreen />);
     expect(screen.getByText('Aluno')).toBeTruthy();
   });
 
-  it('renders logout button', () => {
+  it('renders edit and logout buttons', () => {
     render(<ProfileScreen />);
+    expect(screen.getByText('Editar perfil')).toBeTruthy();
     expect(screen.getByText('Sair')).toBeTruthy();
+  });
+
+  it('navigates to EditProfile on edit press', () => {
+    render(<ProfileScreen />);
+    fireEvent.press(screen.getByText('Editar perfil'));
+    expect(mockNavigate).toHaveBeenCalledWith('EditProfile');
   });
 
   it('renders fallbacks when user is null', () => {
     (AuthContext.useAuth as unknown as jest.Mock).mockReturnValue({
       user: null,
       signOut: mockSignOut,
+      updateProfile: jest.fn(),
     });
     render(<ProfileScreen />);
     expect(screen.getByText('?')).toBeTruthy();

@@ -1,5 +1,8 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAuth } from '~/contexts/AuthContext';
 import { logout } from '~/services/authService';
+import { ProfileStackParamList } from '~/types/navigation';
 import {
   Screen,
   Header,
@@ -10,11 +13,16 @@ import {
   Name,
   Email,
   Actions,
+  EditButton,
+  EditButtonText,
   LogoutButton,
   LogoutText,
 } from './ProfileScreen.styles';
 
+type Nav = NativeStackNavigationProp<ProfileStackParamList, 'Profile'>;
+
 export function ProfileScreen() {
+  const navigation = useNavigation<Nav>();
   const { user, signOut } = useAuth();
 
   async function handleLogout() {
@@ -45,6 +53,9 @@ export function ProfileScreen() {
       </Info>
 
       <Actions>
+        <EditButton onPress={() => navigation.navigate('EditProfile')} activeOpacity={0.7}>
+          <EditButtonText>Editar perfil</EditButtonText>
+        </EditButton>
         <LogoutButton onPress={handleLogout} activeOpacity={0.7}>
           <LogoutText>Sair</LogoutText>
         </LogoutButton>

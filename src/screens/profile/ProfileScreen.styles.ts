@@ -60,6 +60,23 @@ export const Email = styled.Text`
 export const Actions = styled.View`
   margin-top: auto;
   padding-bottom: 32px;
+  gap: 12px;
+`;
+
+export const EditButton = styled.TouchableOpacity`
+  height: 48px;
+  border-radius: 4px;
+  background-color: ${colors.accent};
+  align-items: center;
+  justify-content: center;
+`;
+
+export const EditButtonText = styled.Text`
+  font-size: 13px;
+  font-weight: 600;
+  color: ${colors.bg};
+  text-transform: uppercase;
+  letter-spacing: 1px;
 `;
 
 export const LogoutButton = styled.TouchableOpacity`

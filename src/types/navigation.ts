@@ -19,6 +19,7 @@ export type AdminStackParamList = {
 
 export type ProfileStackParamList = {
   Profile: undefined;
+  EditProfile: undefined;
 };
 
 export type RootTabParamList = {

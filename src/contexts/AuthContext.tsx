@@ -16,6 +16,7 @@ interface AuthContextData {
   isAdmin: boolean;
   signIn: (token: string, user: User) => Promise<void>;
   signOut: () => Promise<void>;
+  updateProfile: (user: User) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -31,6 +32,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setAuthToken(accessToken);
     setToken(accessToken);
     setUser(userData);
+  }, []);
+
+  const updateProfile = useCallback(async (updatedUser: User) => {
+    await SecureStore.setItemAsync(USER_KEY, JSON.stringify(updatedUser));
+    setUser(updatedUser);
   }, []);
 
   const signOut = useCallback(async () => {
@@ -82,6 +88,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAdmin: user?.role === 'admin',
         signIn,
         signOut,
+        updateProfile,
       }}
     >
       {children}
